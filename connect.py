@@ -3,8 +3,6 @@ import sqlite3
 def connection():
   return sqlite3.connect('albums.db')
 
-conn = sqlite3.connect('albums.db')
-
 def initialize(conn):
   c = conn.cursor()
 
