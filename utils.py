@@ -2,12 +2,12 @@
 Utility functions
 """
 
-def get_menu_choice(max_choice):
+def get_menu_choice(max_choice, prompt="Select an option: "):
   """
   Prompt user for menu choice
   """
   while True:
-    choice = input("Select an option: ").strip()
+    choice = input(prompt).strip()
     try:
       if not choice.isdigit():
         print ("Please enter a number.")
