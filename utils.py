@@ -2,7 +2,7 @@
 Utility functions
 """
 
-def get_menu_choice(max_choice, prompt="Select an option: "):
+def get_menu_choice(max_choice, prompt="\nSelect an option: "):
   """
   Prompt user for menu choice
   """
