@@ -84,10 +84,10 @@ def display_artists(artists):
   """
   Display list of artists
   """
-  for artist_id, name in artists:
-    print(f"{artist_id + 1}. {name}")
-  # for index, (_, name) in enumerate(artists, start=1):
-  #   print(f"{index}. {name}")
+  # for artist_id, name in artists:
+  #   print(f"{artist_id + 1}. {name}")
+  for index, (_, name) in enumerate(artists, start=1):
+    print(f"{index}. {name}")
 
 def prompt_new_artist_name():
   """
