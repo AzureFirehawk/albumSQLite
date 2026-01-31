@@ -1,37 +1,29 @@
 # albumSQLite
 # Overview
 
-{Provide a description of the software that you wrote and how it integrates with a SQL Relational Database. Describe how to use your program.}
+This program stores CD information in a simple relational database. The menu prompts for user input and allows the user to add new artists or add albums to existing artists. Album information can be edited or deleted. There is also an option to view basic statistics of the database (number or albums per artist or genere)
 
-{Describe your purpose for writing this software.}
-
-{Provide a link to your YouTube demonstration. It should be a 4-5 minute demo of the software running, a walkthrough of the code, and a view of how created the Relational Database.}
+I wrote this out of personal interest. I have a lot of physical CDs and I was curious about how much I have of different generes or artists.
 
 [Software Demo Video](http://youtube.link.goes.here)
 
 # Relational Database
 
-{Describe the relational database you are using.}
+Local database file. Contains an artist table and album table. 
 
-{Describe the structure (tables) of the relational database that you created.}
+Artist holds ID(primary key) and Name. 
+Album holds ID(primary key), artist ID (foreign key), Name, Genre
 
 # Development Environment
 
-{Describe the tools that you used to develop the software}
-
-{Describe the programming language that you used and any libraries.}
+Code was written in VSCode using python and SQLite3
 
 # Useful Websites
 
-{Make a list of websites that you found helpful in this project}
-
-- [Web Site Name](http://url.link.goes.here)
-- [Web Site Name](http://url.link.goes.here)
+- [YouTube Python SQLite Tutorial](https://www.youtube.com/watch?v=pd-0G0MigUA)
+- [Official Python Documentation](https://docs.python.org/3/library/sqlite3.html)
 
 # Future Work
 
-{Make a list of things that you need to fix, improve, and add in the future.}
-
-- Item 1
-- Item 2
-- Item 3
+- Expand tables to include more information (album release year, composer names, etc.)
+- Impliment a graphical UI, potentially
