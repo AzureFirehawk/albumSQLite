@@ -41,7 +41,7 @@ def main():
     elif choice == 3:
       delete_album(conn)
     elif choice == 4:
-      artist_id = show_or_add_artist(conn)
+      artist_id, name = show_or_add_artist(conn)
       view_by_artist(conn, artist_id)
     elif choice == 5:
       show_stats_menu(conn)
