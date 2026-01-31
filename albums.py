@@ -4,7 +4,7 @@ CRUD functions for albums
 """
 
 from artists import show_or_add_artist, select_artist
-from utils import get_menu_choice
+from utils import (get_menu_choice, prompt_continue, prompt_edit_value)
 
 # ------------Main Menu Functions------------
 # ---Add Album---
@@ -64,8 +64,8 @@ def delete_album(conn):
 
   album_id, title, _ = select_album(albums)
 
-  confirm = input(f"Are you sure you want to delete '{title}'? (y/n): ").strip().lower()
-  if confirm != "y":
+  confirm = prompt_continue(f"Confirm deletion of '{title}' (y/n): ", default=False)
+  if not confirm:
     print("Album deletion cancelled.")
     return
   
@@ -101,10 +101,6 @@ def prompt_album_genre():
   """
   genre = input("Enter the album genre: ").strip()
   return genre.title() if genre else None
-
-def prompt_edit_value(field_name, current_value):
-  value = input(f"{field_name} (blank to keep '{current_value}'): ").strip()
-  return value.title() if value else current_value
 
 def select_album(albums):
   """
