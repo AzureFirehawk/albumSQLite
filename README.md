@@ -5,7 +5,7 @@ This program stores CD information in a simple relational database. The menu pro
 
 I wrote this out of personal interest. I have a lot of physical CDs and I was curious about how much I have of different generes or artists.
 
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://youtu.be/GYnakBp4NTI)
 
 # Relational Database
 
