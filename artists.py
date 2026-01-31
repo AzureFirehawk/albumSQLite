@@ -26,7 +26,7 @@ def show_or_add_artist(conn):
       try:
         name = prompt_new_artist_name()
         artist_id = add_artist(conn, name)
-        return artist_id
+        return artist_id, name
       except ArtistAlreadyExists:
         print("That artist already exists.")
         continue
@@ -40,14 +40,15 @@ def show_or_add_artist(conn):
     # if user picks an existing artist
     if choice <= len(artists):
       artist_id = artists[choice - 1][0]
-      return artist_id
+      name = artists[choice - 1][1]
+      return artist_id, name
     
     # if user picks "Add a new artist"
     else:
       name = prompt_new_artist_name()
       try:
         artist_id = add_artist(conn, name)
-        return artist_id
+        return artist_id, name
       except ArtistAlreadyExists:
         print("That artist already exists.")
 
