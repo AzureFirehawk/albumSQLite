@@ -20,3 +20,22 @@ def get_menu_choice(max_choice, prompt="\nSelect an option: "):
       return choice
     except ValueError:
       print(f"Please enter a number between 1 and {max_choice}.")
+
+def prompt_continue(message="\nDo you want to continue? (y/n): ", default=True):
+  """
+  Prompt user to continue or exit a loop
+  Returns: True if user wants to continue, False if not
+  """
+  yes_options = ('y', 'yes')
+  no_options = ('n', 'no')
+
+  while True:
+    choice = input(message).strip().lower()
+    if not choice:
+      return default
+    elif choice in yes_options:
+      return True
+    elif choice in no_options:
+      return False
+    else:
+      print("Please enter 'y' or 'n'.")
