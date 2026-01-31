@@ -5,7 +5,7 @@ Controls main program loop and routes user input to appropriate functions
 
 # Import modules
 from connect import connection, initialize
-from artists import show_or_add_artist
+from artists import (show_or_add_artist, select_artist)
 from albums import (
   add_album,
   edit_album,
@@ -13,7 +13,7 @@ from albums import (
   view_by_artist
 )
 from stats import show_stats_menu
-from utils import get_menu_choice, prompt_continue
+from utils import (get_menu_choice, prompt_continue)
 
 def show_main_menu():
   """Display main menu options"""
@@ -35,22 +35,28 @@ def main():
     choice = get_menu_choice(6)
 
     if choice == 1:
-      add_album(conn)
-      if not prompt_continue():
-        break
+      while True:
+        add_album(conn)
+        if not prompt_continue("Add another album? (y/n): "):
+          break
     elif choice == 2:
-      edit_album(conn)
-      if not prompt_continue():
-        break
+      while True:
+        edit_album(conn)
+        if not prompt_continue("Edit another album? (y/n): "):
+          break
     elif choice == 3:
-      delete_album(conn)
-      if not prompt_continue():
-        break
+      while True:
+        delete_album(conn)
+        if not prompt_continue("Delete another album? (y/n): "):
+          break
     elif choice == 4:
-      artist_id, name = show_or_add_artist(conn)
-      view_by_artist(conn, artist_id)
-      if not prompt_continue():
-        break
+      while True:
+        artist_id = select_artist(conn)
+        if not artist_id:
+          break
+        view_by_artist(conn, artist_id)
+        if not prompt_continue("View albums for another artist? (y/n): "):
+          break
     elif choice == 5:
       show_stats_menu(conn)
     elif choice == 6:
