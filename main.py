@@ -5,7 +5,7 @@ Controls main program loop and routes user input to appropriate functions
 
 # Import modules
 from connect import connection, initialize
-from artists import (show_or_add_artist, select_artist)
+from artists import select_artist
 from albums import (
   add_album,
   edit_album,
