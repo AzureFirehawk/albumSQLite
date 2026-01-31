@@ -38,13 +38,10 @@ def edit_album(conn):
   album_id, current_title, current_genre = select_album(albums)
   print("\nCurrent album details:")
   print(f"Title: {current_title}")
-  print(f"Genre: {current_genre}")
+  print(f"Genre: {current_genre if current_genre else 'Unknown Genre'}")
 
-  new_title = input("Enter the new album title (blank for no change): ").strip()
-  new_genre = input("Enter the new album genre (blank for no change): ").strip()
-
-  title = new_title.title() if new_title else current_title
-  genre = new_genre.title() if new_genre else current_genre
+  title = prompt_edit_value("Title", current_title)
+  genre = prompt_edit_value("Genre", current_genre)
 
   update_album(conn, album_id, title, genre)
   print(f"Album '{title}' has been updated in the database.")
@@ -105,11 +102,16 @@ def prompt_album_genre():
   genre = input("Enter the album genre: ").strip()
   return genre.title() if genre else None
 
+def prompt_edit_value(field_name, current_value):
+  value = input(f"{field_name} (blank to keep '{current_value}'): ").strip()
+  return value.title() if value else current_value
+
 def select_album(albums):
   """
   Helper function to consolidate menu selection code
   Returns: (album_id, title, genre)
   """ 
+  print("\nAlbums:")
   display_albums(albums)
   choice = get_menu_choice(len(albums))
   return albums[choice - 1]
@@ -137,7 +139,7 @@ def get_albums_for_artist(conn, artist_id):
 
 def display_albums(albums):
   for index, (_, title, genre) in enumerate(albums, start=1):
-    display_genre = genre if genre else "Unknown Genre"
+    display_genre = genre.title() if genre else "Unknown Genre"
     print(f"{index}. {title} ({display_genre})")
 
 def update_album(conn, album_id, title, genre=None):
