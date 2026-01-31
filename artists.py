@@ -15,46 +15,50 @@ class ArtistAlreadyExists(Exception):
 def show_or_add_artist(conn):
   """
   Gives user the option to select an exisiting artist or add a new one
-  Output: artist_id
+  Returns: (artist_id, name)
   """
-  while True:
-    artists = get_all_artists(conn)
+  
+  artists = get_all_artists(conn)
 
-    # if no artists, add one
-    if not artists:
-      print("There are no artists in the database. Lets add one!")
-      try:
-        name = prompt_new_artist_name()
-        artist_id = add_artist(conn, name)
-        return artist_id, name
-      except ArtistAlreadyExists:
-        print("That artist already exists.")
-        continue
-    
-    # display artists and "Add a new artist" option
-    print("\nSelect an artist:")
-    display_artists(artists)
-    print(f"{len(artists) + 1}. Add a new artist")
-    choice = get_menu_choice(len(artists) + 1)
+  # if no artists, add one
+  if not artists:
+    print("There are no artists in the database. Lets add one!")
+    return _add_artist_flow(conn)
+
+  # display artists and "Add a new artist" option
+  print("\nSelect an artist:")
+  display_artists(artists)
+  print(f"{len(artists) + 1}. Add a new artist")
+  choice = get_menu_choice(len(artists) + 1)
 
     # if user picks an existing artist
-    if choice <= len(artists):
-      artist_id = artists[choice - 1][0]
-      name = artists[choice - 1][1]
-      return artist_id, name
+  if choice <= len(artists):
+    artist_id, name = artists[choice - 1]
+    return artist_id, name
     
-    # if user picks "Add a new artist"
-    else:
-      name = prompt_new_artist_name()
-      try:
-        artist_id = add_artist(conn, name)
-        return artist_id, name
-      except ArtistAlreadyExists:
-        print("That artist already exists.")
+  # if user picks "Add a new artist"
+  return _add_artist_flow(conn)
 
+def select_artist(conn):
+  """
+  Prompt user to select an artist
+  Returns: artist_id or None
+  """
+  artists = get_all_artists(conn)
+  if not artists:
+    print("There are no artists in the database.")
+    return None
+  
+  display_artists(artists)
+  choice = get_menu_choice(len(artists))
+  artist_id, _ = artists[choice - 1]
+  return artist_id
+
+
+# Helper functions
 def get_all_artists(conn):
   """
-  Return list of artist_id and name
+  Return list of (artist_id, name)
   """
   c = conn.cursor()
   c.execute("""
@@ -64,10 +68,21 @@ def get_all_artists(conn):
   """)
   return c.fetchall()
 
+def _add_artist_flow(conn):
+  """
+  Setup flow for adding a new artist
+  """
+  name = prompt_new_artist_name()
+  try:
+    artist_id = add_artist(conn, name)
+    return artist_id, name
+  except ArtistAlreadyExists:
+    print(f"{name} already exists in the database.")
+
 def add_artist(conn, name):
   """
   Add new artist to database
-  Output: artist_id
+  Returns: artist_id
   """
   try:
     c = conn.cursor()
@@ -76,8 +91,7 @@ def add_artist(conn, name):
       VALUES (?)
     """, (name,))
     conn.commit()
-    artist_id = c.lastrowid
-    return artist_id
+    return c.lastrowid
   except sqlite3.IntegrityError:
     raise ArtistAlreadyExists
 
@@ -85,8 +99,6 @@ def display_artists(artists):
   """
   Display list of artists
   """
-  # for artist_id, name in artists:
-  #   print(f"{artist_id + 1}. {name}")
   for index, (_, name) in enumerate(artists, start=1):
     print(f"{index}. {name}")
 
@@ -95,9 +107,7 @@ def prompt_new_artist_name():
   Prompt user for new artist name
   """
   while True:
-    name = input("Enter the artist name: ").strip()
-    name = name.title()
+    name = input("Enter the artist name: ").strip().title()
     if name:
       return name
-
     print("Artist name cannot be blank.")
