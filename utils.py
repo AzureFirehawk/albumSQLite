@@ -39,3 +39,7 @@ def prompt_continue(message="\nDo you want to continue? (y/n): ", default=True):
       return False
     else:
       print("Please enter 'y' or 'n'.")
+
+def prompt_edit_value(field_name, current_value):
+  value = input(f"{field_name} (blank to keep '{current_value}'): ").strip()
+  return value.title() if value else current_value
