@@ -74,7 +74,7 @@ def albums_per_genre(conn):
 
   print("\n== Albums per Genre ==")
   for genre, count in results:
-    print(f"\n{genre:<20}: {count} album{'s' if count != 1 else ''}")
+    print(f"\n{genre:<15}: {count} album{'s' if count != 1 else ''}")
 
 def total_albums(conn):
   c = conn.cursor()
