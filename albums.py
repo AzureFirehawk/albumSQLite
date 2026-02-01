@@ -18,7 +18,6 @@ def add_album(conn):
   genre = prompt_album_genre()
   insert_album(conn, artist_id, title, genre)
   print(f"'{title}' by {name} has been added to the database.")
-  return name
 
 # ---Edit Album---
 def edit_album(conn):
